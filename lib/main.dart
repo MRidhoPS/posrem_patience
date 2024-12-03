@@ -28,8 +28,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: LoginPage(),
+    return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(255, 29, 4, 34),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 33, 1, 39),
+          centerTitle: true,
+          iconTheme: IconThemeData(
+            color: Colors.white,
+            opacity: 0.5
+          ),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 16
+          )
+        )
+      ),
+      home: const LoginPage(),
     );
   }
 }

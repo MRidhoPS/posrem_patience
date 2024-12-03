@@ -30,7 +30,7 @@ class DataContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           boxShadow: const [
             BoxShadow(
-                color: Colors.black,
+                color: Color.fromARGB(255, 59, 11, 8),
                 blurRadius: 2,
                 offset: Offset(2, 4),
                 spreadRadius: 2)

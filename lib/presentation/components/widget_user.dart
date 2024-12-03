@@ -24,13 +24,14 @@ class WidgetUsers extends StatelessWidget {
           Text(
             '$title:',
             style:
-                GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w500),
+                GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.white),
           ),
           Text(
             '${data[type]}',
             style: GoogleFonts.poppins(
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: Colors.white
             ),
           )
         ],

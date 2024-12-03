@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:posrem_profileapp/presentation/components/widget_user.dart';
 import 'package:posrem_profileapp/presentation/formatter.dart';
 import 'package:posrem_profileapp/presentation/page/detail_data_page.dart';
 import 'package:posrem_profileapp/presentation/provider/detail_user_provider.dart';
@@ -16,9 +15,6 @@ class DetailUser extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => DetailUserProvider()..fetchDetailUser(userId),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('User Details'),
-        ),
         body: Consumer<DetailUserProvider>(
           builder: (context, provider, child) {
             if (provider.isLoading) {
@@ -44,60 +40,21 @@ class DetailUser extends StatelessWidget {
                 });
               }
 
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
+              return SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      WidgetUsers(data: data, title: 'Name', type: 'name'),
-                      WidgetUsers(data: data, title: 'Gender', type: 'gender'),
-                      WidgetUsers(data: data, title: 'Born', type: 'born'),
-                      WidgetUsers(
-                          data: data, title: 'Religion', type: 'religion'),
-                      WidgetUsers(
-                          data: data, title: 'Address', type: 'address'),
-                      WidgetUsers(
-                          data: data, title: 'Education', type: 'education'),
-                      WidgetUsers(
-                          data: data, title: 'Phone Number', type: 'phoneNum'),
+                      ContainerWelcome(data: data),
                       const SizedBox(height: 30),
-                      const Text(
-                        'Monthly Data:',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20, top: 20),
+                        child: Text(
+                          'Monthly Data:',
+                          style: TextStyle(fontSize: 14, color: Colors.white70),
+                        ),
                       ),
-                      const SizedBox(height: 15),
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: monthlyData.length,
-                        itemBuilder: (context, index) {
-                          var entry = monthlyData[index];
-
-                          return Card(
-                            child: ListTile(
-                              onTap: () {
-                                // Navigate to DetailData if needed
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailData(
-                                      data: entry,
-                                      title: Formatter().formatDate(entry),
-                                    ),
-                                  ),
-                                );
-                                // );
-                              },
-                              title: Text(
-                                Formatter().formatDate(entry),
-                              ),
-                              subtitle: Text('BMI: ${entry['bmi'] ?? 'N/A'}'),
-                            ),
-                          );
-                        },
-                      ),
+                      ListMonthlyData(monthlyData: monthlyData),
                     ],
                   ),
                 ),
@@ -105,6 +62,107 @@ class DetailUser extends StatelessWidget {
             }
           },
         ),
+      ),
+    );
+  }
+}
+
+class ListMonthlyData extends StatelessWidget {
+  const ListMonthlyData({
+    super.key,
+    required this.monthlyData,
+  });
+
+  final List<Map<String, dynamic>> monthlyData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: monthlyData.length,
+        itemBuilder: (context, index) {
+          var entry = monthlyData[index];
+    
+          return ContentListData(entry: entry);
+        },
+      ),
+    );
+  }
+}
+
+class ContentListData extends StatelessWidget {
+  const ContentListData({
+    super.key,
+    required this.entry,
+  });
+
+  final Map<String, dynamic> entry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20),
+      child: Card(
+        color: Colors.white.withOpacity(0.2),
+        child: ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailData(
+                  data: entry,
+                  title: Formatter().formatDate(entry),
+                ),
+              ),
+            );
+          },
+          title: Text(
+            Formatter().formatDate(entry),
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ContainerWelcome extends StatelessWidget {
+  const ContainerWelcome({
+    super.key,
+    required this.data,
+  });
+
+  final Map<String, dynamic> data;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.2,
+      color: Colors.white.withOpacity(0.2),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Welcome,",
+            style: TextStyle(color: Colors.white60, fontSize: 18),
+          ),
+          Text(
+            "${data['name']}",
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 34,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }
