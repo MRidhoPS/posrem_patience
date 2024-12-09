@@ -1,84 +1,36 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:posrem_profileapp/presentation/provider/login_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:posrem_profileapp/presentation/page/home_page.dart';
 import 'package:rive/rive.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
-  LoginPageState createState() => LoginPageState();
-}
-
-class LoginPageState extends State<LoginPage> {
-  final nameController = TextEditingController();
-  String selectedGender = 'Pria'; // Default gender
-  bool isLoading = false;
-
-  Future<void> loginUser() async {
-    final name = nameController.text.trim();
-
-    if (name.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Nama harus diisi!")),
-      );
-      return;
-    }
-
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      // Query Firestore untuk mencari user
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('name', isEqualTo: name)
-          .where('gender', isEqualTo: selectedGender)
-          .get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        // Ambil data pertama dari hasil query
-        final userData = querySnapshot.docs.first.id;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailUser(userId: userData),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Nama atau gender salah!")),
-        );
-      }
-    } catch (e) {
-      print("Terjadi kesalahan: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Terjadi kesalahan saat login")),
-      );
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const HeaderLogin(),
-            containerLogin(),
+            HeaderLogin(),
+            ContentLogin(),
           ],
         ),
       ),
     );
   }
+}
 
-  Padding containerLogin() {
+class ContentLogin extends StatelessWidget {
+  const ContentLogin({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<LoginProvider>(context);
+
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: SizedBox(
@@ -99,45 +51,43 @@ class LoginPageState extends State<LoginPage> {
                 fontSize: 24,
               ),
             ),
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 40),
             TextField(
-              controller: nameController,
+              controller: provider.nameController,
               style: const TextStyle(color: Colors.white),
               decoration: const InputDecoration(
                 labelText: "Nama Lengkap",
                 labelStyle: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 16),
+                  color: Colors.white,
+                  fontWeight: FontWeight.w300,
+                  fontSize: 16,
+                ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   borderSide: BorderSide(
-                    color: Colors.white, // Same color as the border
+                    color: Colors.white,
                     width: 2.5,
-                    style: BorderStyle.solid,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                   borderSide: BorderSide(
-                    color: Colors.white, // Same color as the border
+                    color: Colors.white,
                     width: 1,
-                    style: BorderStyle.solid,
                   ),
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
             DropdownButtonFormField<String>(
-              value: selectedGender,
+              value: provider.selectedGender,
               dropdownColor: Colors.black,
               decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white),
-                      borderRadius: BorderRadius.circular(10))),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.white),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               style: const TextStyle(color: Colors.white),
               items: ['Pria', 'Perempuan']
                   .map((gender) => DropdownMenuItem(
@@ -146,28 +96,24 @@ class LoginPageState extends State<LoginPage> {
                       ))
                   .toList(),
               onChanged: (value) {
-                setState(() {
-                  selectedGender = value!;
-                });
+                if (value != null) {
+                  provider.setGender(value); // Ensure value is not null
+                }
               },
             ),
             const SizedBox(height: 40),
-            // Tombol Login
-            isLoading
+            provider.isLoading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
                     style: ButtonStyle(
-                      backgroundColor: WidgetStatePropertyAll(
+                      backgroundColor: WidgetStateProperty.all(
                         Colors.white.withOpacity(0.3),
                       ),
-                      minimumSize: const WidgetStatePropertyAll(
-                        Size(
-                          double.infinity,
-                          50,
-                        ),
+                      minimumSize: WidgetStateProperty.all(
+                        const Size(double.infinity, 50),
                       ),
                     ),
-                    onPressed: loginUser,
+                    onPressed: () => provider.loginUser(context),
                     child: Text(
                       "Login",
                       style: GoogleFonts.poppins(
@@ -185,9 +131,7 @@ class LoginPageState extends State<LoginPage> {
 }
 
 class HeaderLogin extends StatelessWidget {
-  const HeaderLogin({
-    super.key,
-  });
+  const HeaderLogin({super.key});
 
   @override
   Widget build(BuildContext context) {

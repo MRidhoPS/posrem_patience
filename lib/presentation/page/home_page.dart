@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:posrem_profileapp/presentation/formatter.dart';
 import 'package:posrem_profileapp/presentation/page/detail_data_page.dart';
 import 'package:posrem_profileapp/presentation/provider/detail_user_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // For Timestamp
+import 'package:provider/provider.dart';// For Timestamp
 
 class DetailUser extends StatelessWidget {
   const DetailUser({super.key, required this.userId});
@@ -23,23 +22,6 @@ class DetailUser extends StatelessWidget {
               return const Center(child: Text('No data available.'));
             } else {
               final data = provider.userDetails!;
-
-              List<Map<String, dynamic>> monthlyData = [];
-              if (data['data'] != null) {
-                Map<String, dynamic> dataEntries = data['data'];
-                dataEntries.forEach((key, value) {
-                  var entry = value as Map<String, dynamic>;
-                  monthlyData.add(entry);
-                });
-
-                // Sort monthly data by date (createdAt)
-                monthlyData.sort((a, b) {
-                  DateTime dateA = (a['createdAt'] as Timestamp).toDate();
-                  DateTime dateB = (b['createdAt'] as Timestamp).toDate();
-                  return dateA.compareTo(dateB);
-                });
-              }
-
               return SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
@@ -54,7 +36,7 @@ class DetailUser extends StatelessWidget {
                           style: TextStyle(fontSize: 14, color: Colors.white70),
                         ),
                       ),
-                      ListMonthlyData(monthlyData: monthlyData),
+                      ListMonthlyData(monthlyData: provider.monthlyData),
                     ],
                   ),
                 ),
@@ -66,6 +48,7 @@ class DetailUser extends StatelessWidget {
     );
   }
 }
+
 
 class ListMonthlyData extends StatelessWidget {
   const ListMonthlyData({
@@ -167,52 +150,3 @@ class ContainerWelcome extends StatelessWidget {
     );
   }
 }
-
-
-// import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-
-// class DetailUser extends StatelessWidget {
-//   final String userId;
-
-//   const DetailUser({Key? key, required this.userId}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Detail User'),
-//       ),
-//       body: FutureBuilder<DocumentSnapshot>(
-//         future:
-//             FirebaseFirestore.instance.collection('users').doc(userId).get(),
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return Center(child: CircularProgressIndicator());
-//           }
-//           if (snapshot.hasError) {
-//             return Center(child: Text('Error: ${snapshot.error}'));
-//           }
-//           if (!snapshot.hasData || !snapshot.data!.exists) {
-//             return Center(child: Text('User data not found.'));
-//           }
-
-//           // Retrieve user data from the document
-//           final userData = snapshot.data!.data() as Map<String, dynamic>;
-
-//           return Padding(
-//             padding: const EdgeInsets.all(16.0),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text('Name: ${userData['name'] ?? 'N/A'}'),
-//                 Text('Gender: ${userData['born'] ?? 'N/A'}'),
-//                 // Display other user data as needed
-//               ],
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
