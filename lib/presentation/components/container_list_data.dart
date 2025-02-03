@@ -18,15 +18,15 @@ class ContentListData extends StatelessWidget {
         color: Colors.white.withOpacity(0.2),
         child: ListTile(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailData(
-                  data: entry,
-                  title: Formatter().formatDate(entry),
-                ),
-              ),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => DetailData(
+            //       data: entry,
+            //       title: Formatter().formatDate(entry),
+            //     ),
+            //   ),
+            // );
           },
           title: Text(
             Formatter().formatDate(entry),
