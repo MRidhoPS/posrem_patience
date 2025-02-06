@@ -17,11 +17,11 @@ class DropDownGender extends StatelessWidget {
           dropdownColor: Colors.black,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.white),
+              borderSide: const BorderSide(color: Color(0xFF4B4B4B)),
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Color(0xFF4B4B4B)),
           items: ['Pria', 'Perempuan']
               .map((gender) => DropdownMenuItem(
                     value: gender,

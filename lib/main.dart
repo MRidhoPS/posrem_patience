@@ -34,12 +34,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          scaffoldBackgroundColor: const Color.fromARGB(255, 29, 4, 34),
+          scaffoldBackgroundColor: const Color(0xFFE7ECF4),
+          
           appBarTheme: const AppBarTheme(
-              backgroundColor: Color.fromARGB(255, 33, 1, 39),
+              backgroundColor: Color(0xFFE7ECF4),
               centerTitle: true,
-              iconTheme: IconThemeData(color: Colors.white, opacity: 0.5),
-              titleTextStyle: TextStyle(color: Colors.white, fontSize: 16))),
+              iconTheme: IconThemeData(
+                color: Colors.black,
+                size: 25,
+              ),
+              titleTextStyle: TextStyle(color: Color(0xFF4B4B4B), fontSize: 16))),
       home: const LoginPage(),
     );
   }

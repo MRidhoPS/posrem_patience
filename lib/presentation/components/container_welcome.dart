@@ -15,19 +15,19 @@ class ContainerWelcome extends StatelessWidget {
       margin:  EdgeInsets.zero,
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.2,
-      color: Colors.white.withOpacity(0.2),
+      color: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
             "Welcome,",
-            style: TextStyle(color: Colors.white60, fontSize: 18),
+            style: TextStyle(color: Color(0xFF4B4B4B), fontSize: 18),
           ),
           Text(
             "${data['name']}",
             style: const TextStyle(
-              color: Colors.white,
+              color: Color(0xFF4B4B4B),
               fontSize: 34,
               fontWeight: FontWeight.w600,
             ),

@@ -13,7 +13,7 @@ class ButtonLogin extends StatelessWidget {
         return ElevatedButton(
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.all(
-              Colors.white.withOpacity(0.3),
+              Colors.white,
             ),
             minimumSize: WidgetStateProperty.all(
               const Size(double.infinity, 50),
@@ -24,7 +24,7 @@ class ButtonLogin extends StatelessWidget {
             provider.isLoading ? "Loading..." : "Login",
             style: GoogleFonts.poppins(
               fontSize: 20,
-              color: Colors.white,
+              color: const Color(0xFF4B4B4B),
               fontWeight: FontWeight.w500,
             ),
           ),

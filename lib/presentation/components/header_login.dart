@@ -12,7 +12,7 @@ class SubTitle extends StatelessWidget {
     return Text(
       'Posrem Website',
       style: GoogleFonts.luckiestGuy(
-        color: Colors.white,
+        color: const Color(0xFF4B4B4B),
         fontSize: 24,
       ),
     );
@@ -29,7 +29,7 @@ class TitleLogin extends StatelessWidget {
     return Text(
       'Welcome Back To',
       style: GoogleFonts.luckiestGuy(
-        color: Colors.white,
+        color: const Color(0xFF4B4B4B),
         fontSize: 30,
       ),
     );

@@ -29,13 +29,6 @@ class HomePage extends StatelessWidget {
                     children: [
                       ContainerWelcome(data: data),
                       const SizedBox(height: 20),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: Text(
-                          "Your Statistics",
-                          style: TextStyle(fontSize: 14, color: Colors.white70),
-                        ),
-                      ),
 
                       /// **Menampilkan daftar tahun yang tersedia**
                       if (provider.availableYears.isNotEmpty) ...[
@@ -43,8 +36,8 @@ class HomePage extends StatelessWidget {
                           padding: EdgeInsets.only(left: 20),
                           child: Text(
                             'Available Years:',
-                            style:
-                                TextStyle(fontSize: 14, color: Colors.white70),
+                            style: TextStyle(
+                                fontSize: 14, color: Color(0xFF4B4B4B)),
                           ),
                         ),
                         ListView.builder(
@@ -57,6 +50,9 @@ class HomePage extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(
                                   horizontal: 16, vertical: 8),
                               child: ListTile(
+                                splashColor: Colors.white,
+                                tileColor: Colors.white,
+                                
                                 title: Text(year,
                                     style: const TextStyle(fontSize: 18)),
                                 trailing: const Icon(Icons.arrow_forward_ios),

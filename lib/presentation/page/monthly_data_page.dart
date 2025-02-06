@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:posrem_profileapp/presentation/page/detail_data_page.dart';
 import 'package:posrem_profileapp/presentation/provider/detail_user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart'; // Import untuk format tanggal
+import 'package:intl/intl.dart';
+import 'package:rive/rive.dart' as rive; // Import untuk format tanggal
 
 class MonthlyDataPage extends StatelessWidget {
   final String userId;
@@ -96,17 +97,63 @@ class MonthlyDataPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 20),
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 250, 185, 180),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                  )),
+                              child: Center(
+                                child: Text(
+                                  year,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 30,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                  ),
+                                ),
+                                child: const rive.RiveAnimation.asset(
+                                  antialiasing: false,
+                                  'assets/rope.riv',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       const Padding(
                         padding: EdgeInsets.only(left: 20, top: 20),
                         child: Text(
-                          'Monthly Data:',
-                          style: TextStyle(fontSize: 14, color: Colors.white70),
+                          'Statistic Berat Badan:',
+                          style:
+                              TextStyle(fontSize: 14, color: Color(0xFF4B4B4B)),
                         ),
                       ),
 
                       if (chartData.isNotEmpty)
                         Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(20),
                           child: SizedBox(
                             height: 250,
                             child: LineChart(
@@ -126,13 +173,16 @@ class MonthlyDataPage extends StatelessWidget {
                                       getTitlesWidget: (value, meta) => Text(
                                         value.toString(),
                                         style: const TextStyle(
-                                            color: Colors.white, fontSize: 12),
+                                            color: Color(0xFF4B4B4B),
+                                            fontSize: 12),
                                       ),
                                     ),
                                   ),
                                   bottomTitles: AxisTitles(
                                     sideTitles: SideTitles(
+                                      reservedSize: 15,
                                       showTitles: true,
+
                                       getTitlesWidget:
                                           (double value, TitleMeta meta) {
                                         // Ambil nama bulan dari mapping
@@ -140,20 +190,32 @@ class MonthlyDataPage extends StatelessWidget {
                                             monthMap[value.toInt()] ?? '';
                                         return Text(monthLabel,
                                             style: const TextStyle(
-                                                color: Colors.white));
+                                                color: Color(0xFF4B4B4B)));
                                       },
                                       interval:
                                           1, // Pastikan setiap bulan ditampilkan
                                     ),
                                   ),
                                 ),
-                                borderData: FlBorderData(show: true),
+                                borderData: FlBorderData(
+                                    show: true,
+                                    border: Border.all(
+                                      color: const Color(0xFF4B4B4B),
+                                    )),
                                 lineBarsData: [
                                   LineChartBarData(
                                     spots: chartData,
                                     isCurved: true,
-                                    color: Colors.blue,
-                                    barWidth: 4,
+                                    color: Colors.white,
+                                    curveSmoothness: 0.50,
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Color.fromARGB(255, 186, 186, 186),
+                                        Color.fromARGB(255, 235, 235, 235),
+                                        Color.fromARGB(255, 205, 205, 205),
+                                      ],
+                                    ),
+                                    barWidth: 3,
                                     belowBarData: BarAreaData(show: false),
                                   ),
                                 ],
@@ -163,6 +225,14 @@ class MonthlyDataPage extends StatelessWidget {
                         ),
 
                       // Menampilkan data bulanan dari tahun yang dipilih
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20, top: 20),
+                        child: Text(
+                          'Data Bulanan:',
+                          style:
+                              TextStyle(fontSize: 14, color: Color(0xFF4B4B4B)),
+                        ),
+                      ),
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -182,8 +252,6 @@ class MonthlyDataPage extends StatelessWidget {
                             child: ListTile(
                               title: Text(month,
                                   style: const TextStyle(fontSize: 18)),
-                              subtitle: Text(
-                                  'BB: ${monthData['bb']} | BMI: ${monthData['bmi']}'),
                               trailing: const Icon(Icons.arrow_forward_ios),
                               onTap: () {
                                 Navigator.push(
@@ -194,6 +262,7 @@ class MonthlyDataPage extends StatelessWidget {
                                       year: year,
                                       month: monthKey,
                                       monthName: month,
+                                      bmiDesc: monthData['bmiDesc'],
                                     ),
                                   ),
                                 );
@@ -201,6 +270,9 @@ class MonthlyDataPage extends StatelessWidget {
                             ),
                           );
                         },
+                      ),
+                      const SizedBox(
+                        height: 30,
                       ),
                     ],
                   ),

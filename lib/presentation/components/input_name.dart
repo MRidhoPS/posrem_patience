@@ -14,25 +14,25 @@ class InputName extends StatelessWidget {
       builder: (context, provider, child) {
         return TextField(
           controller: provider.nameController,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Color(0xFF4B4B4B)),
           decoration: const InputDecoration(
             labelText: "Nama Lengkap",
             labelStyle: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w300,
+              color: Color(0xFF4B4B4B),
+              fontWeight: FontWeight.w400,
               fontSize: 16,
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(
-                color: Colors.white,
+                color:  Color(0xFF4B4B4B),
                 width: 2.5,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(
-                color: Colors.white,
+                color:  Color(0xFF4B4B4B),
                 width: 1,
               ),
             ),
