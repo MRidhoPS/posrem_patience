@@ -11,7 +11,8 @@ class ContainerWelcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      margin:  EdgeInsets.zero,
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.2,
       color: Colors.white.withOpacity(0.2),

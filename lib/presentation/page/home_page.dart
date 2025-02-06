@@ -4,8 +4,8 @@ import 'package:posrem_profileapp/presentation/page/monthly_data_page.dart';
 import 'package:posrem_profileapp/presentation/provider/detail_user_provider.dart';
 import 'package:provider/provider.dart';
 
-class DetailUser extends StatelessWidget {
-  const DetailUser({super.key, required this.userId});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key, required this.userId});
 
   final String userId;
 
@@ -29,6 +29,13 @@ class DetailUser extends StatelessWidget {
                     children: [
                       ContainerWelcome(data: data),
                       const SizedBox(height: 20),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          "Your Statistics",
+                          style: TextStyle(fontSize: 14, color: Colors.white70),
+                        ),
+                      ),
 
                       /// **Menampilkan daftar tahun yang tersedia**
                       if (provider.availableYears.isNotEmpty) ...[
@@ -68,16 +75,6 @@ class DetailUser extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                       ],
-
-                      /// **Menampilkan Monthly Data seperti sebelumnya**
-                      const Padding(
-                        padding: EdgeInsets.only(left: 20, top: 20),
-                        child: Text(
-                          'Monthly Data:',
-                          style: TextStyle(fontSize: 14, color: Colors.white70),
-                        ),
-                      ),
-                      // ListMonthlyData(monthlyData: provider.monthlyData),
                     ],
                   ),
                 ),

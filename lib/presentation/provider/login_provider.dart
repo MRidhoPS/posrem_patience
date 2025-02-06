@@ -37,7 +37,7 @@ class LoginProvider extends ChangeNotifier {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailUser(userId: userData),
+            builder: (context) => HomePage(userId: userData),
           ),
         );
       } else {

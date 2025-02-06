@@ -1,36 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:posrem_profileapp/data/datasource/database.dart';
-import 'package:posrem_profileapp/data/formatter/monthly_formatter.dart';
+import 'package:intl/intl.dart';
 
 class DetailUserProvider extends ChangeNotifier {
   final DatabaseServices _databaseServices = DatabaseServices();
 
   bool isLoading = false;
   Map<String, dynamic>? userDetails;
-  List<Map<String, dynamic>> monthlyData = [];
-  List<String> availableYears = []; // Tambahan untuk menyimpan data tahun
+  List<String> availableYears = [];
+  Map<String, Map<String, dynamic>> weightDataByMonth =
+      {}; // Data berat badan per bulan
 
-  /// Fetch user details (Tetap seperti sebelumnya)
+  /// Fetch user details
   Future<void> fetchDetailUser(String userId) async {
     isLoading = true;
     notifyListeners();
 
     try {
-      // Ambil data pengguna dari Firestore
       userDetails = await _databaseServices.fetchUserById(userId);
-
-      // Ambil data tahun dari userDetails['data']
       availableYears = userDetails?['data']?.keys.toList().cast<String>() ?? [];
-
-      // Offload processing ke background isolate
-      monthlyData = await MonthlyDataProcessor.processDataAsync(
-        userDetails!['data'],
-        userId,
-      );
     } catch (e) {
       debugPrint("Error fetching user details: $e");
       userDetails = null;
-      monthlyData = [];
       availableYears = [];
     } finally {
       isLoading = false;
@@ -38,16 +30,43 @@ class DetailUserProvider extends ChangeNotifier {
     }
   }
 
-  /// Fetch hanya daftar tahun tanpa mempengaruhi data lainnya
-  Future<void> fetchAvailableYears(String userId) async {
+  /// Fetch data bulanan untuk chart berat badan
+  Future<void> fetchMonthlyWeightData(String userId, String year) async {
     isLoading = true;
     notifyListeners();
 
     try {
-      availableYears = await _databaseServices.fetchDataYear(userId);
+      weightDataByMonth.clear();
+      final data = userDetails?['data'][year] ?? {};
+
+      for (var entry in data.entries) {
+        var entryData = entry.value;
+        Timestamp createdAt = entryData['createdAt'];
+        String monthKey = DateFormat('MM')
+            .format(createdAt.toDate()); // Simpan bulan dalam angka (01-12)
+        String monthName =
+            DateFormat('MMMM').format(createdAt.toDate()); // Simpan nama bulan
+
+        if (entryData.containsKey('bb')) {
+          double weight = double.tryParse(entryData['bb'].toString()) ?? 0.0;
+
+          // Simpan hanya data terbaru dalam bulan itu
+          if (!weightDataByMonth.containsKey(monthKey) ||
+              createdAt.millisecondsSinceEpoch >
+                  weightDataByMonth[monthKey]!['createdAt']
+                      .millisecondsSinceEpoch) {
+            weightDataByMonth[monthKey] = {
+              'monthName': monthName,
+              'weight': weight,
+              'createdAt': createdAt,
+              'bmi': entryData['bmi']
+            };
+          }
+        }
+      }
     } catch (e) {
-      debugPrint("Error fetching available years: $e");
-      availableYears = [];
+      debugPrint("Error fetching monthly weight data: $e");
+      weightDataByMonth = {};
     } finally {
       isLoading = false;
       notifyListeners();

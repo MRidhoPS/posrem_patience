@@ -11,17 +11,24 @@ class MonthlyDetailPage extends StatelessWidget {
   final String monthName;
 
   const MonthlyDetailPage(
-      {Key? key,
+      {super.key,
       required this.userId,
       required this.year,
       required this.month,
-      required this.monthName})
-      : super(key: key);
+      required this.monthName});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => DetailUserProvider()..fetchDetailUser(userId),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) {
+          final provider = DetailUserProvider();
+          provider.fetchDetailUser(userId).then((_) {
+            provider.fetchMonthlyWeightData(userId, year);
+          });
+          return provider;
+        }),
+      ],
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:posrem_profileapp/data/formatter/data_formatter.dart';
-import 'package:posrem_profileapp/presentation/page/detail_data_page.dart';
 
 class ContentListData extends StatelessWidget {
   const ContentListData({
