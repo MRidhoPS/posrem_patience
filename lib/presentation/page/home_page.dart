@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:posrem_profileapp/presentation/components/card_information.dart';
 import 'package:posrem_profileapp/presentation/components/container_welcome.dart';
-import 'package:posrem_profileapp/presentation/page/detail_information_page.dart';
 import 'package:posrem_profileapp/presentation/page/monthly_data_page.dart';
 import 'package:posrem_profileapp/presentation/provider/detail_user_provider.dart';
 import 'package:provider/provider.dart';
@@ -102,25 +102,8 @@ class HomePage extends StatelessWidget {
                             Map<String, dynamic> docData =
                                 provider.informationDetails![docId]!;
 
-                            return Card(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              child: ListTile(
-                                  title: Text(
-                                    docData['title'] as String,
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            DetailInformationPage(
-                                          data: docData,
-                                        ),
-                                      ),
-                                    );
-                                  }),
+                            return CardInformation(
+                              data: docData,
                             );
                           },
                         ),

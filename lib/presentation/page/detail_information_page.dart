@@ -32,7 +32,7 @@ class DetailInformationPage extends StatelessWidget {
                 ? Image.network(
                     imageUrl,
                     width: double.infinity,
-                    height: 200,
+                    height: 300,
                     fit: BoxFit.cover,
                   )
                 : Container(
