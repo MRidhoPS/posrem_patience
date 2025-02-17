@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posrem_profileapp/presentation/components/content_information.dart';
 
 class DetailInformationPage extends StatelessWidget {
   const DetailInformationPage({super.key, required this.data});
@@ -16,11 +17,10 @@ class DetailInformationPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Detail Information',
-          style:  TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        // backgroundColor: Colors.blueAccent,
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -34,6 +34,16 @@ class DetailInformationPage extends StatelessWidget {
                     width: double.infinity,
                     height: 300,
                     fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.error);
+                    },
                   )
                 : Container(
                     width: double.infinity,
@@ -43,58 +53,7 @@ class DetailInformationPage extends StatelessWidget {
                   ),
 
             /// **📜 Content**
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// **📌 Title**
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-
-                  /// **📖 Paragraph Content**
-                  ...content.entries
-                      .where((entry) =>
-                          entry.key !=
-                          'title') // Hindari menampilkan ulang title
-                      .map((entry) => Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Text(
-                              entry.value,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black87,
-                                height: 1.5,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          )),
-
-                  /// **📎 Footer / Sumber**
-                  if (footer != null) ...[
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: Text(
-                        '📌 Sumber: $footer',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
+            ContentInformation(title: title, content: content, footer: footer),
           ],
         ),
       ),

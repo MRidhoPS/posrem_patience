@@ -7,15 +7,14 @@ class SubTitle extends StatelessWidget {
     super.key,
   });
 
+  static final textStyle = GoogleFonts.luckiestGuy(
+    color: const Color(0xFF4B4B4B),
+    fontSize: 24,
+  );
+
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Posrem Website',
-      style: GoogleFonts.luckiestGuy(
-        color: const Color(0xFF4B4B4B),
-        fontSize: 24,
-      ),
-    );
+    return Text('Posrem Website', style: textStyle);
   }
 }
 
@@ -24,14 +23,16 @@ class TitleLogin extends StatelessWidget {
     super.key,
   });
 
+  static final textStyle = GoogleFonts.luckiestGuy(
+    color: const Color(0xFF4B4B4B),
+    fontSize: 30,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Text(
       'Welcome Back To',
-      style: GoogleFonts.luckiestGuy(
-        color: const Color(0xFF4B4B4B),
-        fontSize: 30,
-      ),
+      style: textStyle,
     );
   }
 }
@@ -41,12 +42,14 @@ class HeaderLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return const SizedBox(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.4,
-      child: const RiveAnimation.asset(
+      height: 500,
+      child: RiveAnimation.asset(
+        antialiasing: false,
         'assets/space.riv',
         fit: BoxFit.cover,
+        useArtboardSize: false,
       ),
     );
   }

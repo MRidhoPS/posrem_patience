@@ -8,20 +8,20 @@ class ButtonLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(
-      builder: (context, provider, child) {
+    return Selector<LoginProvider, bool>(
+      selector: (context, provider) => provider.isLoading,
+      builder: (context, isLoading, child) {
         return ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(
-              Colors.white,
-            ),
-            minimumSize: WidgetStateProperty.all(
-              const Size(double.infinity, 50),
-            ),
+            backgroundColor: WidgetStateProperty.all(Colors.white),
+            minimumSize:
+                WidgetStateProperty.all(const Size(double.infinity, 50)),
           ),
-          onPressed: () => provider.loginUser(context),
+          onPressed: isLoading
+              ? null
+              : () => context.read<LoginProvider>().loginUser(context),
           child: Text(
-            provider.isLoading ? "Loading..." : "Login",
+            isLoading ? "Loading..." : "Login",
             style: GoogleFonts.poppins(
               fontSize: 20,
               color: const Color(0xFF4B4B4B),

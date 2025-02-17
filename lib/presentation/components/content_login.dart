@@ -9,20 +9,20 @@ class ContentLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(20.0),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
       child: SizedBox(
         width: double.infinity,
         child: Column(
           children: [
-            TitleLogin(),
-            SubTitle(),
-            SizedBox(height: 40),
-            InputName(),
-            SizedBox(height: 20),
+            const TitleLogin(),
+            const SubTitle(),
+            const SizedBox(height: 40),
+            const InputName(),
+            const SizedBox(height: 20),
             DropDownGender(),
-            SizedBox(height: 40),
-            ButtonLogin()
+            const SizedBox(height: 40),
+            const ButtonLogin()
           ],
         ),
       ),

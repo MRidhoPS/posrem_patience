@@ -9,11 +9,11 @@ class InputName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return Consumer<LoginProvider>(
-      builder: (context, provider, child) {
+    return Selector<LoginProvider, TextEditingController>(
+      selector: (context, provider) => provider.nameController,
+      builder: (context, controller, child) {
         return TextField(
-          controller: provider.nameController,
+          controller: controller,
           style: const TextStyle(color: Color(0xFF4B4B4B)),
           decoration: const InputDecoration(
             labelText: "Nama Lengkap",
@@ -25,14 +25,14 @@ class InputName extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(
-                color:  Color(0xFF4B4B4B),
+                color: Color(0xFF4B4B4B),
                 width: 2.5,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(
-                color:  Color(0xFF4B4B4B),
+                color: Color(0xFF4B4B4B),
                 width: 1,
               ),
             ),

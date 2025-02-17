@@ -3,18 +3,22 @@ import 'package:posrem_profileapp/presentation/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
 class DropDownGender extends StatelessWidget {
-  const DropDownGender({
+  DropDownGender({
     super.key,
   });
 
+  // Mendaftarkan list gender di luar widget build untuk menghindari pembuatan ulang setiap kali widget dibangun
+  final List<String> genderList = ['Pria', 'Perempuan'];
+
   @override
   Widget build(BuildContext context) {
-
-    return Consumer<LoginProvider>(
-      builder: (context, provider, child) {
+    return Selector<LoginProvider, String>(
+      // Menggunakan selector untuk hanya rebuild ketika selectedGender berubah
+      selector: (context, provider) => provider.selectedGender,
+      builder: (context, selectedGender, child) {
         return DropdownButtonFormField<String>(
-          value: provider.selectedGender,
-          dropdownColor: Colors.black,
+          value: selectedGender,
+          dropdownColor: Colors.white,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(color: Color(0xFF4B4B4B)),
@@ -22,7 +26,7 @@ class DropDownGender extends StatelessWidget {
             ),
           ),
           style: const TextStyle(color: Color(0xFF4B4B4B)),
-          items: ['Pria', 'Perempuan']
+          items: genderList
               .map((gender) => DropdownMenuItem(
                     value: gender,
                     child: Text(gender),
@@ -30,7 +34,8 @@ class DropDownGender extends StatelessWidget {
               .toList(),
           onChanged: (value) {
             if (value != null) {
-              provider.setGender(value); // Ensure value is not null
+              // Memastikan perubahan pada gender hanya terjadi jika nilainya valid
+              context.read<LoginProvider>().setGender(value);
             }
           },
         );

@@ -7,13 +7,17 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            HeaderLogin(),
-            ContentLogin(),
-          ],
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: const Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              HeaderLogin(),
+              ContentLogin(),
+            ],
+          ),
         ),
       ),
     );
