@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:posrem_profileapp/util/app_util.dart';
 
 class StatisticsChart extends StatelessWidget {
   final List<FlSpot> chartData;
@@ -13,7 +14,7 @@ class StatisticsChart extends StatelessWidget {
         ? Padding(
             padding: const EdgeInsets.all(20),
             child: SizedBox(
-              height: 250,
+              height: AppUtil.screenHeight * 0.3,
               child: LineChart(
                 LineChartData(
                   gridData: const FlGridData(show: false),

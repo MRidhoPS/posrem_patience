@@ -19,8 +19,6 @@ class DatabaseServices {
       for (var doc in querySnapshot.docs)
         doc.id: doc.data()
     };
-
-    print('Fetched Information: $informationMap');
     return informationMap;
   }
 

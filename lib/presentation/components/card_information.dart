@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:posrem_profileapp/presentation/components/image_information.dart';
 import 'package:posrem_profileapp/presentation/components/title_information.dart';
 import 'package:posrem_profileapp/presentation/page/detail_information_page.dart';
+import 'package:posrem_profileapp/util/app_util.dart';
 
 class CardInformation extends StatelessWidget {
   const CardInformation({super.key, required this.data});
@@ -21,8 +22,8 @@ class CardInformation extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.25,
+        width: AppUtil.screenWidth,
+        height: AppUtil.screenHeight * 0.25,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posrem_profileapp/presentation/provider/detail_user_provider.dart';
+import 'package:posrem_profileapp/util/app_util.dart';
 import 'package:provider/provider.dart';
 
 class MonthlyDetailPage extends StatelessWidget {
@@ -82,8 +83,8 @@ class MonthlyDetailPage extends StatelessWidget {
         : Colors.red;
     return Container(
       margin: const EdgeInsets.only(bottom: 40),
-      width: double.infinity,
-      height: 300,
+      width: AppUtil.screenWidth,
+      height: AppUtil.screenHeight *0.4,
       decoration: const BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
@@ -109,7 +110,7 @@ class MonthlyDetailPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 50),
       margin: const EdgeInsets.only(bottom: 20),
-      width: double.infinity,
+      width: AppUtil.screenWidth,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -147,7 +148,7 @@ class MonthlyDetailPage extends StatelessWidget {
   Widget _buildMeasurementCard(
       String label, String value, BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.45,
+      width: AppUtil.screenWidth * 0.45,
       color: Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 50),
       child: Column(

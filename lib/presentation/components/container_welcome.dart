@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posrem_profileapp/util/app_util.dart';
 
 class ContainerWelcome extends StatelessWidget {
   const ContainerWelcome({
@@ -13,8 +14,8 @@ class ContainerWelcome extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       margin:  EdgeInsets.zero,
-      width: double.infinity,
-      height: MediaQuery.of(context).size.height * 0.2,
+      width: AppUtil.screenWidth,
+      height: AppUtil.screenHeight * 0.2,
       color: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

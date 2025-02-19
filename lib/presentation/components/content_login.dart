@@ -3,6 +3,7 @@ import 'package:posrem_profileapp/presentation/components/button_login.dart';
 import 'package:posrem_profileapp/presentation/components/drop_down.dart';
 import 'package:posrem_profileapp/presentation/components/header_login.dart';
 import 'package:posrem_profileapp/presentation/components/input_name.dart';
+import 'package:posrem_profileapp/util/app_util.dart';
 
 class ContentLogin extends StatelessWidget {
   const ContentLogin({super.key});
@@ -12,7 +13,7 @@ class ContentLogin extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: SizedBox(
-        width: double.infinity,
+        width: AppUtil.screenWidth,
         child: Column(
           children: [
             const TitleLogin(),

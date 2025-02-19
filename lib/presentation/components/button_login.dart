@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:posrem_profileapp/presentation/provider/login_provider.dart';
+import 'package:posrem_profileapp/util/app_util.dart';
 import 'package:provider/provider.dart';
 
 class ButtonLogin extends StatelessWidget {
@@ -14,8 +15,12 @@ class ButtonLogin extends StatelessWidget {
         return ElevatedButton(
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.all(Colors.white),
-            minimumSize:
-                WidgetStateProperty.all(const Size(double.infinity, 50)),
+            minimumSize: WidgetStateProperty.all(
+              Size(
+                AppUtil.screenWidth,
+                50,
+              ),
+            ),
           ),
           onPressed: isLoading
               ? null

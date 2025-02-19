@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posrem_profileapp/util/app_util.dart';
 
 class ImageInformation extends StatelessWidget {
   const ImageInformation({
@@ -12,8 +13,8 @@ class ImageInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.18,
+      width: AppUtil.screenWidth,
+      height: AppUtil.screenHeight * 0.18,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),

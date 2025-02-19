@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posrem_profileapp/util/app_util.dart';
 import 'package:rive/rive.dart' as rive;
 
 class YearHeader extends StatelessWidget {
@@ -10,8 +11,8 @@ class YearHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.25,
+      width: AppUtil.screenWidth,
+      height: AppUtil.screenHeight * 0.25,
       child: Row(
         children: [
           Container(
